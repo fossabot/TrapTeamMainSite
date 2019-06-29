@@ -8,7 +8,7 @@ admin.initializeApp({
 });
 
 exports.FillTrap = functions.https.onRequest((req, res) => {
-  if (req.method != "POST") {
+  if (req.method !== "POST") {
     console.error('Not POST: ' + req.method);
     res.status(405).send("Error, Must send with POST not: " + req.method);
   }
@@ -20,7 +20,7 @@ exports.FillTrap = functions.https.onRequest((req, res) => {
 });
 
 exports.EmptyTrap = functions.https.onRequest((req, res) => {
-  if (req.method != "POST") {
+  if (req.method !== "POST") {
     console.error('Not POST: ' + req.method);
     res.status(405).send("Error, Must send with POST not: " + req.method);
   }
@@ -32,7 +32,7 @@ exports.EmptyTrap = functions.https.onRequest((req, res) => {
 });
 
 exports.ToggleTrap = functions.https.onRequest((req, res) => {
-  if (req.method != "POST") {
+  if (req.method !== "POST") {
     console.error('Not POST: ' + req.method);
     res.status(405).send("Error, Must send with POST not: " + req.method);
   }
@@ -45,7 +45,7 @@ exports.ToggleTrap = functions.https.onRequest((req, res) => {
       console.log("Emptyed " + TrapHolder + "'s Trap.");
       res.status(200).send("Emptyed " + TrapHolder + "'s Trap.");
     }
-    else if (Value == "Empty") {
+    else if (Value === "Empty") {
       admin.database().ref("/Trapholders/" + TrapHolder + "/Traps/" + TrapName + "/Status").set("Full");
       console.log("Filled " + TrapHolder + "'s Trap.");
       res.status(200).send("Filled " + TrapHolder + "'s Trap.");
