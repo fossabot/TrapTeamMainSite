@@ -49,7 +49,7 @@ exports.ToggleTrap = functions.https.onRequest((req, res) => {
     .ref("/Trapholders/" + TrapHolder + "/Traps/" + TrapName + "/Status")
     .once("value", snapshot => {
       var Value = snapshot.val();
-      if (Value == "Full") {
+      if (Value === "Full") {
         admin
           .database()
           .ref("/Trapholders/" + TrapHolder + "/Traps/" + TrapName + "/Status")
