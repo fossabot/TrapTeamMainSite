@@ -15,9 +15,9 @@ exports.FillTrap = functions.https.onRequest((req, res) => {
   var TrapHolder = req.body.owner;
   var TrapName = req.body.name;
   admin
-  .database()
-  .ref("/Trapholders/" + TrapHolder + "/Traps/" + TrapName + "/Status")
-  .set("Full");
+    .database()
+    .ref("/Trapholders/" + TrapHolder + "/Traps/" + TrapName + "/Status")
+    .set("Full");
   console.log("Filled " + TrapHolder + "'s Trap.");
   res.status(200).send("Filled " + TrapHolder + "'s Trap.");
 });
@@ -30,9 +30,9 @@ exports.EmptyTrap = functions.https.onRequest((req, res) => {
   var TrapHolder = req.body.owner;
   var TrapName = req.body.name;
   admin
-  .database()
-  .ref("/Trapholders/" + TrapHolder + "/Traps/" + TrapName + "/Status")
-  .set("Empty");
+    .database()
+    .ref("/Trapholders/" + TrapHolder + "/Traps/" + TrapName + "/Status")
+    .set("Empty");
   console.log("Emptyed " + TrapHolder + "'s Trap.");
   res.status(200).send("Emptyed " + TrapHolder + "'s Trap.");
 });
@@ -45,28 +45,28 @@ exports.ToggleTrap = functions.https.onRequest((req, res) => {
   var TrapHolder = req.body.owner;
   var TrapName = req.body.name;
   admin
-  .database()
-  .ref("/Trapholders/" + TrapHolder + "/Traps/" + TrapName + "/Status")
-  .once("value", snapshot => {
-    var Value = snapshot.val();
-    if (Value == "Full") {
-      admin
-      .database()
-      .ref("/Trapholders/" + TrapHolder + "/Traps/" + TrapName + "/Status")
-      .set("Empty");
-      console.log("Emptyed " + TrapHolder + "'s Trap.");
-      res.status(200).send("Emptyed " + TrapHolder + "'s Trap.");
-    } else if (Value === "Empty") {
-      admin
-      .database()
-      .ref("/Trapholders/" + TrapHolder + "/Traps/" + TrapName + "/Status")
-      .set("Full");
-      console.log("Filled " + TrapHolder + "'s Trap.");
-      res.status(200).send("Filled " + TrapHolder + "'s Trap.");
-    } else {
-      res.status(400).send("You mucked up!!!");
-    }
-  });
+    .database()
+    .ref("/Trapholders/" + TrapHolder + "/Traps/" + TrapName + "/Status")
+    .once("value", snapshot => {
+      var Value = snapshot.val();
+      if (Value == "Full") {
+        admin
+          .database()
+          .ref("/Trapholders/" + TrapHolder + "/Traps/" + TrapName + "/Status")
+          .set("Empty");
+        console.log("Emptyed " + TrapHolder + "'s Trap.");
+        res.status(200).send("Emptyed " + TrapHolder + "'s Trap.");
+      } else if (Value === "Empty") {
+        admin
+          .database()
+          .ref("/Trapholders/" + TrapHolder + "/Traps/" + TrapName + "/Status")
+          .set("Full");
+        console.log("Filled " + TrapHolder + "'s Trap.");
+        res.status(200).send("Filled " + TrapHolder + "'s Trap.");
+      } else {
+        res.status(400).send("You mucked up!!!");
+      }
+    });
 });
 
 exports.CreateUser = functions.https.onRequest((req, res) => {
@@ -78,29 +78,29 @@ exports.CreateUser = functions.https.onRequest((req, res) => {
   var TrapName = req.body.name;
   var TrapNumber = req.body.name;
   admin
-  .database()
-  .ref("/Trapholders/" + TrapHolder + "/Traps/" + TrapName + "/Status")
-  .set("Empty");
+    .database()
+    .ref("/Trapholders/" + TrapHolder + "/Traps/" + TrapName + "/Status")
+    .set("Empty");
   admin
-  .database()
-  .ref("/Trapholders/" + TrapHolder + "/Traps/" + TrapName + "/ID")
-  .set(TrapNumber);
+    .database()
+    .ref("/Trapholders/" + TrapHolder + "/Traps/" + TrapName + "/ID")
+    .set(TrapNumber);
 });
 
 exports.addAccount = functions.auth.user().onCreate(user => {
   if (user.email === null) {
     user.email = user.phoneNumber;
   }
-  
+
   const email = user.email; // The email of the user.
   const id = user.uid;
   const displayName = user.displayName; // The display name of the user.
   admin
-  .database()
-  .ref("/Trapholders/" + id + "/traps/name")
-  .set("test");
+    .database()
+    .ref("/Trapholders/" + id + "/traps/name")
+    .set("test");
   return admin
-  .database()
-  .ref("/Trapholders/" + id + "/email")
-  .set(email);
+    .database()
+    .ref("/Trapholders/" + id + "/email")
+    .set(email);
 });
