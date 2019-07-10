@@ -76,11 +76,11 @@ exports.CreateUser = functions.https.onRequest((req, res) => {
   }
   var TrapHolder = req.body.owner;
   var TrapName = req.body.name;
-  var TrapNumber = req.body.name;
+  var TrapNumber = req.body.number;
   admin
     .database()
     .ref("/Trapholders/" + TrapHolder + "/Traps/" + TrapName + "/Status")
-    .set("Empty");
+    .set("NeedsTest");
   admin
     .database()
     .ref("/Trapholders/" + TrapHolder + "/Traps/" + TrapName + "/ID")
