@@ -85,18 +85,23 @@ exports.GetTrapNumber = functions.https.onRequest((req, res) => {
   });
 });
 
-exports.ToggleByNumber = functions.https.onRequest((req, res) => {
+exports.AddTrap = functions.https.onRequest((req, res) => {
   if (req.method !== "POST") {
     console.error("Not POST: " + req.method);
     res.status(405).send("Error, Must send with POST not: " + req.method);
   }
   var TrapNumber = req.body.number;
+  var TrapName = req.body.name;
+  var TrapHolder = req.body.TrapHolder
   admin
   .database()
-  .ref("Trapholders/{TrapHolder}/Traps/")
-  .once("value", snapshot => {
-    res.status(200).send(snapshot.val().BackyardTrap.ID);
-  });
+  .ref("/Trapholders/" + TrapHolder + "/Traps/" + TrapName + "/Status")
+  .set("Empty");
+  admin
+  .database()
+  .ref("/Trapholders/" + TrapHolder + "/Traps/" + TrapName + "/ID")
+  .set(TrapNumber);
+  res.status(200).send("Working, Completed NewTrap Operation.");
 });
 
 exports.addAccount = functions.auth.user().onCreate(user => {
